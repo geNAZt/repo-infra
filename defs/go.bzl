@@ -86,6 +86,8 @@ def _go_genrule_impl(ctx):
     env.update({
         "PATH": ctx.configuration.host_path_separator.join(["/bin", "/usr/bin"]),
         "GOPATH": paths.join(ctx.bin_dir.path, paths.dirname(ctx.build_file_path), "gopath"),
+        # GOCACHE is required starting in Go 1.12
+        "GOCACHE": paths.join(ctx.path("."), ".gocache"),
     })
 
     ctx.actions.run_shell(
